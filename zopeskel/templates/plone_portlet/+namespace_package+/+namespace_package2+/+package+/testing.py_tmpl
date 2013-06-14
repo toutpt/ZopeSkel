@@ -1,0 +1,32 @@
+from plone.app.testing import (
+    PloneWithPackageLayer,
+    IntegrationTesting,
+    FunctionalTesting,
+)
+from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
+from plone.testing import z2
+import ${dotted_name}
+
+
+FIXTURE = PloneWithPackageLayer(
+    zcml_filename="configure.zcml",
+    zcml_package=${dotted_name},
+    additional_z2_products=[],
+    gs_profile_id='${dotted_name}:default',
+    name="${dotted_name}:FIXTURE"
+)
+
+INTEGRATION = IntegrationTesting(
+    bases=(FIXTURE,),
+    name="${dotted_name}:Integration"
+)
+
+FUNCTIONAL = FunctionalTesting(
+    bases=(FIXTURE,),
+    name="${dotted_name}:Functional"
+)
+
+ROBOT = FunctionalTesting(
+    bases=(AUTOLOGIN_LIBRARY_FIXTURE, FIXTURE, z2.ZSERVER),
+    name="${dotted_name}:Robot"
+)
