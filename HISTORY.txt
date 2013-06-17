@@ -1,8 +1,12 @@
 Changelog
 =========
 
-2.22 - (Unreleased)
+4.0.dev - (Unreleased)
 -------------------
+
+* Remove all plone2 and plone3 related skel
+* Rename skells without plone version number
+* plone_portlet: use z3cform instead of formlib
 
 2.21.2 - October 6, 2011
 ------------------------
