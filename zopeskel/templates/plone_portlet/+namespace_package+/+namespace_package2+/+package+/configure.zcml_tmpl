@@ -17,7 +17,7 @@
 
   <genericsetup:registerProfile
        name="default"
-       title="${portlet_name}"
+       title="${dotted_name}"
        directory="profiles/default"
        description="${description}"
        provides="Products.GenericSetup.interfaces.EXTENSION"
