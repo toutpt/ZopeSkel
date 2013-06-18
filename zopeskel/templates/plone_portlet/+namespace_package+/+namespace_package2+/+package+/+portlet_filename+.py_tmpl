@@ -1,18 +1,12 @@
-from zope.interface import implements
+from zope import interface
+\#from zope import schema
+from z3c.form import field
 
 from plone.portlets.interfaces import IPortletDataProvider
 from plone.app.portlets.portlets import base
 from plone.app.portlets.browser import z3cformhelper
 
-\# TODO: If you define any fields for the portlet configuration schema below
-\# do not forget to uncomment the following import
-\#from zope import schema
-from z3c.form import field
-
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-\# TODO: If you require i18n translation for any of your schema fields below,
-\# uncomment the following to import your package MessageFactory
 \#from ${dotted_name} import ${portlet_type_name}MessageFactory as _
 
 
@@ -23,11 +17,6 @@ class I${portlet_type_name}(IPortletDataProvider):
     data that is being rendered and the portlet assignment itself are the
     same.
     """
-
-    # TODO: Add any zope.schema fields here to capture portlet configuration
-    # information. Alternatively, if there are no settings, leave this as an
-    # empty interface - see also notes around the add form and edit form
-    # below.
 
     # some_field = schema.TextLine(title=_(u"Some field"),
     #                              description=_(u"A field to use"),
@@ -41,7 +30,7 @@ class Assignment(base.Assignment):
     with columns.
     """
 
-    implements(I${portlet_type_name})
+    interface.implements(I${portlet_type_name})
 
     # TODO: Set default values for the configurable parameters here
 
@@ -80,7 +69,7 @@ class AddForm(z3cformhelper.AddForm):
     zope.formlib which fields to display. The create() method actually
     constructs the assignment that is being added.
     """
-    form_fields = field.Fields(I${portlet_type_name})
+    fields = field.Fields(I${portlet_type_name})
 
     def create(self, data):
         return Assignment(**data)
@@ -108,4 +97,4 @@ class EditForm(z3cformhelper.EditForm):
     This is registered with configure.zcml. The form_fields variable tells
     zope.formlib which fields to display.
     """
-    form_fields = field.Fields(I${portlet_type_name})
+    fields = field.Fields(I${portlet_type_name})
