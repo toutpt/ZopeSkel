@@ -14,19 +14,19 @@ from zopeskel.vars import ValidationException
 
 
 LICENSE_CATEGORIES = {
-    'DFSG' : 'License :: DFSG approved',
-    'EFS' : 'License :: Eiffel Forum License (EFL)',
-    'NPL' : 'License :: Netscape Public License (NPL)',
-    'ASL' : 'License :: OSI Approved :: Apache Software License',
-    'BSD' : 'License :: OSI Approved :: BSD License',
-    'FDL' : 'License :: OSI Approved :: GNU Free Documentation License (FDL)',
-    'GPL' : 'License :: OSI Approved :: GNU General Public License (GPL)',
-    'LGPL' : 'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
-    'MIT' : 'License :: OSI Approved :: MIT License',
-    'MPL' : 'License :: OSI Approved :: Mozilla Public License 1.0 (MPL)',
-    'MPL11' : 'License :: OSI Approved :: Mozilla Public License 1.1 (MPL 1.1)',
-    'QPL' : 'License :: OSI Approved :: Qt Public License (QPL)',
-    'ZPL' : 'License :: OSI Approved :: Zope Public License',
+    'DFSG': 'License :: DFSG approved',
+    'EFS': 'License :: Eiffel Forum License (EFL)',
+    'NPL': 'License :: Netscape Public License (NPL)',
+    'ASL': 'License :: OSI Approved :: Apache Software License',
+    'BSD': 'License :: OSI Approved :: BSD License',
+    'FDL': 'License :: OSI Approved :: GNU Free Documentation License (FDL)',
+    'GPL': 'License :: OSI Approved :: GNU General Public License (GPL)',
+    'LGPL': 'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
+    'MIT': 'License :: OSI Approved :: MIT License',
+    'MPL': 'License :: OSI Approved :: Mozilla Public License 1.0 (MPL)',
+    'MPL11': 'License :: OSI Approved :: Mozilla Public License 1.1 (MPL 1.1)',
+    'QPL': 'License :: OSI Approved :: Qt Public License (QPL)',
+    'ZPL': 'License :: OSI Approved :: Zope Public License',
     }
 
 
@@ -38,18 +38,20 @@ def wrap_help_paras(wrapper, text):
             print
         print wrapper.fill(para)
 
+
 def get_zopeskel_prefs():
-    # http://snipplr.com/view/7354/get-home-directory-path--in-python-win-lin-other/
+    # http://goo.gl/PeBMe
     try:
         from win32com.shell import shellcon, shell
         homedir = shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0)
-    except ImportError: # quick semi-nasty fallback for non-windows/win32com case
+    except ImportError:  # quick semi-nasty fallback for non-windows case
         homedir = os.path.expanduser("~")
 
     # Get defaults from .zopeskel
     config = SafeConfigParser()
     config.read('%s/.zopeskel' % homedir)
     return config
+
 
 def get_var(vars, name):
     for var in vars:
@@ -164,15 +166,16 @@ For more information: paster help COMMAND""" % print_commands
                     initial_indent="**  ",
                     subsequent_indent="**  ",
                     )
-            print "\n" + '*'*74
+            print "\n" + '*' * 74
             wrap_help_paras(textwrapper, msg)
-            print '*'*74 + "\n"
+            print '*' * 74 + "\n"
 
     def pre(self, *args, **kwargs):
         templates.Template.pre(self, *args, **kwargs)
 
     def get_template_stack(self, command):
-        """ return a list of the template objects being run through in the given command
+        """ return a list of the template objects being run through in the
+        given command
         """
         asked_tmpls = command.options.templates or ['basic_package']
         templates = []
@@ -181,7 +184,8 @@ For more information: paster help COMMAND""" % print_commands
         return [tmpl_obj for tmpl_name, tmpl_obj in templates]
 
     def get_position_in_stack(self, stack):
-        """ return the index of the currently running template in the overall stack
+        """ return the index of the currently running template in the overall
+        stack
         """
         class_stack = [t.__class__ for t in stack]
 
@@ -200,7 +204,7 @@ For more information: paster help COMMAND""" % print_commands
         # which this is true?
         stack = self.get_template_stack(command)
         index = self.get_position_in_stack(stack)
-        remaining_stack = stack[index+1:]
+        remaining_stack = stack[index + 1:]
         have_subcommands_left = [getattr(t, 'use_local_commands', False)
                                  for t in remaining_stack]
         if True in have_subcommands_left:
@@ -223,7 +227,8 @@ For more information: paster help COMMAND""" % print_commands
         EASY, EXPERT = show just those
         """
 
-        if mode == ALL: return {}
+        if mode == ALL:
+            return {}
 
         hidden = {}
 
@@ -271,8 +276,7 @@ For more information: paster help COMMAND""" % print_commands
         # these changes to ZopeSkel, as other projects may
         # use PasteScript in very different ways.
 
-
-        cmd._deleted_once = 1      # don't re-del package
+        cmd._deleted_once = 1  # don't re-del package
 
         textwrapper = TextWrapper(
                 initial_indent="|  ",
@@ -313,19 +317,23 @@ For more information: paster help COMMAND""" % print_commands
                     prompt = var.pretty_description()
                     response = self.null_value_marker
                     while response is self.null_value_marker:
-                        response = cmd.challenge(prompt, var.default, var.should_echo)
+                        response = cmd.challenge(
+                            prompt,
+                            var.default,
+                            var.should_echo
+                        )
                         if response == '?':
                             help = var.further_help().strip() % converted_vars
                             print
                             wrap_help_paras(textwrapper, help)
                             print
-                            response = self.null_value_marker;
+                            response = self.null_value_marker
                         if response is not self.null_value_marker:
                             try:
                                 response = var.validate(response)
                             except ValidationException, e:
                                 print e
-                                response = self.null_value_marker;
+                                response = self.null_value_marker
                     converted_vars[var.name] = response
                 elif var.default is command.NoDefault:
                     errors.append('Required variable missing: %s'
