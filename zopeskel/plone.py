@@ -15,7 +15,7 @@ class Plone(BasicZope):
 This creates a Plone project (to create a Plone *site*, you probably
 want to use the one of the templates for a buildout).
 
-To create a Plone project with a name like 'plone.app.myproject' 
+To create a Plone project with a name like 'plone.app.myproject'
 (2 dots, a 'nested namespace'), use the 'plone_app' template.
 """
     category = "Plone Development"
@@ -30,7 +30,7 @@ To create a Plone project with a name like 'plone.app.myproject'
         modes=(EASY, EXPERT),
         default=True,
         help="""
-If your package has need of a Generic Setup profile, set this value to 'True'.  
+If your package has need of a Generic Setup profile, set this value to 'True'.
 
 Having a Generic Setup profile registered makes your package 'installable'
 using the ZMI portal_quickinstaller or Plone's 'Add/Remove Products' control
@@ -41,10 +41,10 @@ properly installed.
     ))
     get_var(vars, 'namespace_package').default = 'plone'
     get_var(vars, 'package').default = 'example'
-    
+
     def post(self, command, output_dir, vars):
         if vars['add_profile'] == False:
-            # if we do not want a profile, remove it.            
+            # if we do not want a profile, remove it.
             path = os.path.join(output_dir,
                                 vars['namespace_package'],
                                 vars['package'])
@@ -55,10 +55,25 @@ properly installed.
 
 %s
 
-Your package may have structural problems, please check before 
+Your package may have structural problems, please check before
 using it.
 """
                 self.post_run_msg = msg % str(e)
-            
         super(Plone, self).post(command, output_dir, vars)
 
+        #add gitignore
+        path = os.path.join(output_dir)
+        try:
+            os.rename(os.path.join(path, 'gitignore'),
+                      os.path.join(path, '.gitignore'))
+        except OSError, e:
+            msg = """WARNING: Could not create .gitignore file: %s"""
+            self.post_run_msg = msg % str(e)
+
+        #add travisyml
+        try:
+            os.rename(os.path.join(path, 'travis.yml'),
+                      os.path.join(path, '.travis.yml'))
+        except OSError, e:
+            msg = """WARNING: Could not create .travis.yml file: %s"""
+            self.post_run_msg = msg % str(e)
