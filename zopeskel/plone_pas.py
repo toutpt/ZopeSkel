@@ -3,6 +3,7 @@ import copy
 from zopeskel import abstract_zope
 from zopeskel.base import get_var
 
+
 class PlonePas(abstract_zope.AbstractNestedZope):
     _template_dir = 'templates/plone_pas'
     summary = "A project for a Plone PAS plugin"
@@ -19,6 +20,5 @@ system') plugin.
     get_var(vars, 'namespace_package2').default = 'pas'
 
     def pre(self, command, output_dir, vars):
-      vars['multiplugin_name'] = vars['package'].title()
-      super(PlonePas, self).pre(command, output_dir, vars)
-
+        vars['multiplugin_name'] = vars['package'].title()
+        super(PlonePas, self).pre(command, output_dir, vars)

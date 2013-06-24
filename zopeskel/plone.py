@@ -4,7 +4,7 @@ import os
 
 from zopeskel.basic_zope import BasicZope
 from zopeskel.base import get_var
-from zopeskel.base import var, EASY, EXPERT
+from zopeskel.base import EASY, EXPERT
 from zopeskel.vars import BooleanVar
 
 
@@ -43,7 +43,7 @@ properly installed.
     get_var(vars, 'package').default = 'example'
 
     def post(self, command, output_dir, vars):
-        if vars['add_profile'] == False:
+        if vars['add_profile'] is False:
             # if we do not want a profile, remove it.
             path = os.path.join(output_dir,
                                 vars['namespace_package'],

@@ -3,11 +3,11 @@ class IVar:
     """
 
     # actual variable name, eg "description"
-    name = ""    
+    name = ""
 
     # human-facing variable name, eg "Product Description"
-    title = ""     
-    
+    title = ""
+
     # Short, 1-sentence description
     # e.g., "Short description of this product."
     description = ""
@@ -48,8 +48,3 @@ class IVar:
         normalized version of it (eg, "yes" -> True, for boolean
         questions).
         """
-
-
-
-
-

@@ -1,28 +1,28 @@
 import copy
 
 from zopeskel.base import BaseTemplate
-from zopeskel.base import var, EASY, EXPERT
-from zopeskel.vars import StringVar, BooleanVar, IntVar, OnOffVar, BoundedIntVar
+from zopeskel.base import EASY, EXPERT
+from zopeskel.vars import StringVar, OnOffVar, BoundedIntVar
 
 VAR_PLONEVER = StringVar(
     'plone_version',
     title='Plone Version',
     description='Plone version # to install',
     default='3.3.6',
-    modes=(EASY,EXPERT),
+    modes=(EASY, EXPERT),
     page='Main',
     help="""
 This is the version of Plone that will be used for this buildout.
 You should enter the version number you wish to use.
 """
-    )
+)
 
 VAR_Z2_INSTALL = StringVar(
     'zope2_install',
     title='Zope2 Install Path',
     description='Path to Zope2 installation; leave blank to fetch one!',
     default='',
-    modes=(EASY,EXPERT),
+    modes=(EASY, EXPERT),
     page='Main',
     help="""
 This is the file path to the Zope 2 installation. You can enter this
@@ -30,12 +30,12 @@ path to use a pre-existing installation, or you can leave it blank, and
 the current Zope 2 will be downloaded and installed in your new
 buildout.
 """
-    )
+)
 
 VAR_PLONE_PRODUCTS = StringVar(
     'plone_products_install',
     title='Plone Products Directory',
-    description='Path to Plone products; leave blank to fetch [Plone 3.0/3.1 only]',
+    description='Path to Plone products; leave blank to fetch',
     modes=(EASY, EXPERT),
     page='Main',
     default='',
@@ -47,7 +47,7 @@ this blank, they will be downloaded.
 
 For Plone 3.2 and later, this option is ignored.
 """
-    )
+)
 
 VAR_ZOPE_USER = StringVar(
     'zope_user',
@@ -60,7 +60,7 @@ VAR_ZOPE_USER = StringVar(
 Your buildout will have a single user, with manager privileges, defined
 at the root. This option lets you select the name for this user.
 """
-    )
+)
 
 VAR_ZOPE_PASSWD = StringVar(
     'zope_password',
@@ -70,19 +70,19 @@ VAR_ZOPE_PASSWD = StringVar(
     page='Main',
     default='',
     help="""
-Your buildout will have a single user, "%(zope_user)s", with manager 
+Your buildout will have a single user, "%(zope_user)s", with manager
 privileges, defined at the root. This option lets you select the initial
 password for this user. If left blank, the password will be randomly
 generated.
 """
-    )
+)
 
 VAR_HTTP = BoundedIntVar(
     'http_port',
     title='HTTP Port',
     description='Port that Zope will use for serving HTTP',
     default='8080',
-    modes=(EXPERT,EASY),
+    modes=(EXPERT, EASY),
     page='Main',
     help="""
 This options lets you select the port # that Zope will use for serving
@@ -90,14 +90,14 @@ HTTP.
 """,
     min=1024,
     max=65535,
-    )
+)
 
 VAR_DEBUG_MODE = OnOffVar(
     'debug_mode',
     title='Debug Mode',
     description='Should debug mode be "on" or "off"?',
     default='off',
-    modes=(EXPERT,EASY),
+    modes=(EXPERT, EASY),
     page='Main',
     help="""
 Debug mode (sometimes called "Debug/Development Mode") is the correct
@@ -111,16 +111,16 @@ in debug mode even when running in the background.
 You should set this to "on" during development; once you are ready to
 deploy your site, you change this to "off" in your buildout.cfg.
 """
-    )
+)
 
 VAR_VERBOSE_SEC = OnOffVar(
-        'verbose_security',
-        title='Verbose Security?',
-        description='Should verbose security be "on" or "off"?',
-        default='off',
-        modes=(EASY, EXPERT),
-        page='Main',
-        help="""
+    'verbose_security',
+    title='Verbose Security?',
+    description='Should verbose security be "on" or "off"?',
+    default='off',
+    modes=(EASY, EXPERT),
+    page='Main',
+    help="""
 Security error messages (such as "Unauthorized" errors) in Plone are
 intentionally vague--the system doesn't want to reveal too much about
 the security configuration in error messages, given that those error
@@ -133,7 +133,8 @@ helpful, detailed unauthorized error messages.
 There may be a small security risk in leaving this enabled on a site in
 deployment; if you turn it on, you should consider turning it off.
 """
-        )
+)
+
 
 class AbstractBuildout(BaseTemplate):
     """Abstract class for all templates that produce buildouts."""
@@ -141,4 +142,3 @@ class AbstractBuildout(BaseTemplate):
     category = "Buildout"
 
     vars = copy.deepcopy(BaseTemplate.vars)
-

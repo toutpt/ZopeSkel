@@ -14,6 +14,7 @@ ALL = 'all'
 ##########################################################################
 # Variable classes
 
+
 class ValidationException(ValueError):
     """Invalid value provided for variable."""
 
@@ -46,7 +47,7 @@ class var(base_var):
             return '%s (%s)' % (title, self.description)
         else:
             return title
-    
+
     def further_help(self):
         """ return the help string for this class or inform user that none is
             available
@@ -67,9 +68,9 @@ class BooleanVar(var):
             value = value.strip().lower()
 
         #Map special cases to correct values.
-        if value in ['t', 'y', 'yes', 'true', 1]: 
+        if value in ['t', 'y', 'yes', 'true', 1]:
             value = True
-        elif value in ['f','n','no', 'false', 0]:
+        elif value in ['f', 'n', 'no', 'false', 0]:
             value = False
 
         if type(value) != bool:
@@ -91,6 +92,7 @@ class StringVar(var):
 
         return value
 
+
 class StringChoiceVar(var):
     """Choice of strings."""
 
@@ -107,6 +109,7 @@ class StringChoiceVar(var):
             raise ValidationException("Not a valid value: %s" % value)
 
         return value
+
 
 class TextVar(StringVar):
     """Multi-line values."""
@@ -125,9 +128,9 @@ class OnOffVar(StringVar):
             value = value.strip().lower()
 
         #Map special cases to correct values.
-        if value in ['t', 'y', 'yes', 'true', 1, 'on']: 
+        if value in ['t', 'y', 'yes', 'true', 1, 'on']:
             value = 'on'
-        elif value in ['f','n','no', 'false', 0, 'off']:
+        elif value in ['f', 'n', 'no', 'false', 0, 'off']:
             value = 'off'
         else:
             raise ValidationException("Not a valid on/off value: %s" % value)
@@ -137,49 +140,51 @@ class OnOffVar(StringVar):
 
 class IntVar(var):
     """Integer values"""
-    
+
     _default_widget = 'string'
-    
+
     def validate(self, value):
         try:
             value = int(value)
         except ValueError:
             raise ValidationException("Not a valid int: %s" % value)
-        
+
         return value
-    
+
 
 MAXINT = sys.maxint
-MININT = -MAXINT-1
+MININT = -MAXINT - 1
+
+
 class BoundedIntVar(IntVar):
     """Integer values with allowed maximum and minimum values"""
-    
+
     def __init__(self, *args, **kwargs):
         if 'min' in kwargs:
             self.min = kwargs.pop('min')
         else:
             self.min = MININT
-        
+
         if 'max' in kwargs:
             self.max = kwargs.pop('max')
         else:
             self.max = MAXINT
-            
+
         super(BoundedIntVar, self).__init__(*args, **kwargs)
-    
+
     def validate(self, value):
         # first validate that value is an integer
         try:
             val = super(BoundedIntVar, self).validate(value)
         except ValidationException, e:
             raise e
-        
+
         if not self.min <= val <= self.max:
             msg = "%d does not fall within allowed bounds: %d:%d"
             raise ValidationException(msg % (val, self.min, self.max))
-        
+
         return val
-    
+
 
 class DottedVar(var):
     """Variable for 'dotted Python name', eg, 'foo.bar.baz'"""
@@ -193,11 +198,14 @@ class DottedVar(var):
 
         names = value.split(".")
         for name in names:
-            # Check if Python identifier, http://code.activestate.com/recipes/413487/
+            # Check if Python identifier,
+            # http://code.activestate.com/recipes/413487/
             try:
-                class test(object): __slots__ = [name]
+                class test(object):
+                    __slots__ = [name]
             except TypeError:
-                raise ValidationException("Not a valid Python dotted name: %s ('%s' is not an identifier)" % (value, name))
+                msg = """Not a valid Python dotted name: %s
+                ('%s' is not an identifier)"""
+                raise ValidationException(msg % (value, name))
 
         return value
-

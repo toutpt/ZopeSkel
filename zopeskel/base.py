@@ -5,11 +5,8 @@ from ConfigParser import SafeConfigParser
 from paste.script import command
 from paste.script import pluginlib
 from paste.script import templates
-from paste.script.templates import var as base_var
-from paste.script.command import BadCommand
-from paste.script.templates import BasicPackage
-from zopeskel.vars import var, BooleanVar, StringChoiceVar
-from zopeskel.vars import EASY, EXPERT, ALL
+from zopeskel.vars import StringChoiceVar
+from zopeskel.vars import ALL
 from zopeskel.vars import ValidationException
 
 
@@ -27,7 +24,7 @@ LICENSE_CATEGORIES = {
     'MPL11': 'License :: OSI Approved :: Mozilla Public License 1.1 (MPL 1.1)',
     'QPL': 'License :: OSI Approved :: Qt Public License (QPL)',
     'ZPL': 'License :: OSI Approved :: Zope Public License',
-    }
+}
 
 
 def wrap_help_paras(wrapper, text):
@@ -88,10 +85,10 @@ class BaseTemplate(templates.Template):
         StringChoiceVar(
             'expert_mode',
             title='Expert Mode?',
-            description='What question mode would you like? (easy/expert/all)?',
+            description='What mode would you like? (easy/expert/all)?',
             page='Begin',
             default='easy',
-            choices=('easy','expert','all'),
+            choices=('easy', 'expert', 'all'),
             help="""
 In easy mode, you will be asked fewer, more common questions.
 
@@ -139,10 +136,10 @@ $HOME/.zopeskel file.
             commands.sort()
             longest = max([len(n) for n, c in commands])
             print_commands = []
-            for name, command in commands:
+            for name, cmd in commands:
                 name = name + ' ' * (longest - len(name))
                 print_commands.append('  %s  %s' % (name,
-                                                    command.load().summary))
+                                                    cmd.load().summary))
             print_commands = '\n'.join(print_commands)
             print '-' * 78
             print """\
@@ -163,9 +160,9 @@ For more information: paster help COMMAND""" % print_commands
         msg = getattr(self, msg_name, None)
         if msg:
             textwrapper = TextWrapper(
-                    initial_indent="**  ",
-                    subsequent_indent="**  ",
-                    )
+                initial_indent="**  ",
+                subsequent_indent="**  ",
+            )
             print "\n" + '*' * 74
             wrap_help_paras(textwrapper, msg)
             print '*' * 74 + "\n"
@@ -234,7 +231,7 @@ For more information: paster help COMMAND""" % print_commands
 
         for var in expected_vars:
             # if in expert mode, hide vars not for expert mode
-            if  mode not in var.modes:
+            if mode not in var.modes:
                 hidden[var.name] = var.default
 
         return hidden
@@ -279,9 +276,9 @@ For more information: paster help COMMAND""" % print_commands
         cmd._deleted_once = 1  # don't re-del package
 
         textwrapper = TextWrapper(
-                initial_indent="|  ",
-                subsequent_indent="|  ",
-                )
+            initial_indent="|  ",
+            subsequent_indent="|  ",
+        )
 
         # now, mostly copied direct from paster
         expect_vars = self.read_vars(cmd)

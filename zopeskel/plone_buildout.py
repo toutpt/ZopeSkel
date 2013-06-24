@@ -3,7 +3,7 @@ import copy
 from zopeskel import abstract_buildout
 
 
-class Plone4Buildout(abstract_buildout.AbstractBuildout):
+class PloneBuildout(abstract_buildout.AbstractBuildout):
     _template_dir = 'templates/plone4_buildout'
     summary = "A buildout for Plone 4 developer installation"
     help = """
@@ -55,4 +55,4 @@ http://plone.org/products/zopeskel
         vars['eggifiedzope'] = True
         vars['zope2_install'] = True
         vars['zope2_version'] = "2.12.3"
-        super(Plone4Buildout, self).pre(command, output_dir, vars)
+        super(PloneBuildout, self).pre(command, output_dir, vars)

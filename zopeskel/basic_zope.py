@@ -1,6 +1,5 @@
-import copy 
+import copy
 from zopeskel.base import get_var
-from zopeskel.vars import var, BooleanVar
 from zopeskel import abstract_zope
 
 
@@ -16,5 +15,3 @@ This creates a Zope project without any specific Plone features.
     vars = copy.deepcopy(abstract_zope.AbstractZope.vars)
     get_var(vars, 'namespace_package').default = 'myzopelib'
     get_var(vars, 'package').default = 'example'
-
-

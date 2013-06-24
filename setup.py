@@ -51,17 +51,17 @@ setup(name='ZopeSkel',
       test_suite='zopeskel.tests.test_all.test_suite',
       entry_points="""
       [paste.paster_create_template]
-      basic_namespace = zopeskel:BasicNamespace
-      nested_namespace = zopeskel:NestedNamespace
-      basic_zope = zopeskel:BasicZope
-      plone = zopeskel:Plone
-      plone_app = zopeskel:PloneApp
-      plone4_buildout = zopeskel:Plone4Buildout
-      archetype = zopeskel:Archetype
-      plone_portlet = zopeskel:PlonePortlet
+      basic_namespace = zopeskel.basic_namespace:BasicNamespace
+      nested_namespace = zopeskel.nested_namespace:NestedNamespace
+      basic_zope = zopeskel.basic_zope:BasicZope
+      plone = zopeskel.plone:Plone
+      plone_app = zopeskel.plone_app:PloneApp
+      plone_buildout = zopeskel.plone_buildout:PloneBuildout
+      archetype = zopeskel.archetype:Archetype
+      plone_portlet = zopeskel.plone_portlet:PlonePortlet
       plone_hosting = zopeskel.hosting:StandardHosting
-      recipe = zopeskel:Recipe
-      plone_pas = zopeskel:PlonePas
+      recipe = zopeskel.recipe:Recipe
+      plone_pas = zopeskel.plone_pas:PlonePas
 
       [paste.paster_command]
       addcontent = zopeskel.localcommands:ZopeSkelLocalCommand

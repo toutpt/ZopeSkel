@@ -2,7 +2,7 @@ import copy
 
 from zopeskel.plone_app import PloneApp
 from zopeskel.base import get_var
-from zopeskel.base import var, EASY, EXPERT
+from zopeskel.base import EASY, EXPERT
 from zopeskel.vars import StringVar, DottedVar
 
 
@@ -31,7 +31,7 @@ It gets generated in the GenericSetup profile file for the portlet.
 It appears in the Plone UI when managing portlets.
 """
         )
-        )
+    )
     vars.append(
         DottedVar(
             'portlet_type_name',
@@ -46,7 +46,7 @@ used as the class name for the portlet, and is used in the
 generated GenericSetup profile.
 """
         )
-        )
+    )
 
     def pre(self, command, output_dir, vars):
         vars['zip_safe'] = False

@@ -1,7 +1,8 @@
 import copy
-from zopeskel.vars import var, DottedVar, StringVar, BooleanVar, TextVar
+from zopeskel.vars import DottedVar, StringVar, BooleanVar, TextVar
 from zopeskel.base import BaseTemplate
 from zopeskel.base import EASY, EXPERT
+
 
 class BasicNamespace(BaseTemplate):
     _template_dir = 'templates/basic_namespace'
@@ -17,11 +18,11 @@ This creates a Python project without any Zope or Plone features.
     vars = copy.deepcopy(BaseTemplate.vars)
     vars += [
         DottedVar(
-            'namespace_package', 
+            'namespace_package',
             title='Namespace Package Name',
             description='Name of outer namespace package',
-            default='plone', 
-            modes=(EXPERT,), 
+            default='plone',
+            modes=(EXPERT,),
             page='Namespaces',
             help="""
 This is the name of the outer package (Python folder) for this project.
@@ -34,14 +35,14 @@ Note that, for some templates, there may be two namespaces, rather
 than one (to create eggs with names like 'plone.app.blog')--in this
 case, this would be 'plone', the first of the enclosing namespaces.
             """
-            ), 
+        ),
 
         DottedVar(
-            'package', 
+            'package',
             title='Package Name',
             description='Name of the inner namespace package',
-            default='example', 
-            modes=(EXPERT,), 
+            default='example',
+            modes=(EXPERT,),
             page='Namespaces',
             help="""
 This is the name of the innermost package (Python folder) for this project.
@@ -51,42 +52,42 @@ Note that, for some templates, there may be only a package name without
 a namespace package around it--in this case, this would be just the name
 of the package.
 """
-            ),
+        ),
 
         StringVar(
-            'version', 
+            'version',
             title='Version',
             description='Version number for project',
-            default='1.0', 
-            modes=(EASY, EXPERT), 
+            default='1.0',
+            modes=(EASY, EXPERT),
             page='Metadata',
             help="""
 This becomes the version number of the created package. It will be set
 in the egg's setup.py, and may be referred to in other places in the
-generated project.    
+generated project.
 """
-            ),
+        ),
 
         StringVar(
             'description',
             title='Description',
-            description='One-line description of the project', 
+            description='One-line description of the project',
             default='',
-            modes=(EASY, EXPERT), 
+            modes=(EASY, EXPERT),
             page='Metadata',
             help="""
 This should be a single-line description of your project. It will be
 used in the egg's setup.py, and, for Zope/Plone projects, may be used
 in the GenericSetup profile description.
 """
-            ),
+        ),
 
         TextVar(
-            'long_description', 
+            'long_description',
             title='Long Description',
-            description='Multi-line description (in ReST)', 
+            description='Multi-line description (in ReST)',
             default='',
-            modes=(), 
+            modes=(),
             page='Metadata',
             help="""
 This should be a full description for your project. It will be
@@ -95,65 +96,66 @@ used in the egg's setup.py.
 It should be entered in 'restructured text' format; for information,
 see http://docutils.sourceforge.net/rst.html).
 """
-            ),
+        ),
 
         StringVar(
             'author',
             title='Author',
             description='Name of author for project',
-            modes=(), 
+            modes=(),
             page='Metadata',
             help="""
 This should be the name of the author of this project. It will be used
 in the egg's setup.py, and, for some templates, in the generated
 documentation/README files.
 """
-            ),
+        ),
 
         StringVar(
             'author_email',
-            title='Author Email', 
+            title='Author Email',
             description='Email of author for project',
-            modes=(), 
+            modes=(),
             page='Metadata',
             help="""
 This should be the name of the author of this project. It will be used
 in the egg's setup.py, and, for some templates, in the generated
 documentation/README files.
 """
-            ),
+        ),
 
-        StringVar('keywords',
+        StringVar(
+            'keywords',
             title='Keywords',
-            description='List of keywords, space-separated', 
-            modes=(), 
+            description='List of keywords, space-separated',
+            modes=(),
             page='Metadata',
             help="""
 This should be the list of keywords for this project. This will be
 used in the egg's setup.py (and, if this egg is later published on
 PyPI, will be used to categorize the project).
 """
-            ),
-            
+        ),
+
         StringVar(
-            'url', 
+            'url',
             title='Project URL',
             description='URL of the homepage for this project',
-            modes=(), 
+            modes=(),
             page='Metadata',
             default='http://svn.plone.org/svn/collective/',
             help="""
 This should be a URL for the homepage for this project (if applicable).
 It will be used in the egg's setup.py.
 """
-            ),
+        ),
 
         StringVar(
-            'license_name', 
+            'license_name',
             title='Project License',
             description='Name of license for the project',
-            default='GPL', 
-            modes=(), 
+            default='GPL',
+            modes=(),
             page='Metadata',
             help="""
 The license that this project is issued under. It will be used in the
@@ -162,14 +164,14 @@ egg's setup.py.
 Common choices here are 'GPL' (for the GNU General Public License),
 'ZPL' (for the Zope Public License', and 'BSD' (for the BSD license).
 """
-            ),
+        ),
 
         BooleanVar(
             'zip_safe',
             title='Zip-Safe?',
-            description='Can this project be used as a zipped egg? (true/false)',
+            description='Can be used as a zipped egg? (true/false)',
             default=False,
-            modes=(), 
+            modes=(),
             page='Metadata',
             help="""
 Some eggs can be used directly by Python in zipped format; others must
@@ -179,8 +181,8 @@ are smaller and may be easier to redistribute.
 Most Zope/Plone projects cannot be used in zipped format; if unsure,
 the safest answer is False.
             """
-            ),
-        ]
+        ),
+    ]
 
     def check_vars(self, vars, command):
         if not command.options.no_interactive and \
@@ -188,4 +190,3 @@ the safest answer is False.
             del vars['package']
             command._deleted_once = True
         return super(BasicNamespace, self).check_vars(vars, command)
-

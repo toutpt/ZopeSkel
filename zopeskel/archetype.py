@@ -3,8 +3,9 @@ import copy
 
 from zopeskel.plone import Plone
 from zopeskel.base import get_var
-from zopeskel.base import var, EASY, EXPERT
+from zopeskel.base import EASY, EXPERT
 from zopeskel.vars import StringVar
+
 
 class Archetype(Plone):
     _template_dir = 'templates/archetype'
@@ -25,19 +26,21 @@ on how to use this command.
     use_local_commands = True
 
     vars = copy.deepcopy(Plone.vars)
-    vars.insert(1, StringVar(
-        'title',
-        title='Project Title',
-        description='Title of the project',
-        modes=(EASY, EXPERT),
-        default='Example Name',
-        help="""
-This becomes the title of the project. It is used in the 
+    vars.insert(
+        1,
+        StringVar(
+            'title',
+            title='Project Title',
+            description='Title of the project',
+            modes=(EASY, EXPERT),
+            default='Example Name',
+            help="""
+This becomes the title of the project. It is used in the
 GenericSetup registration for the project and, as such, appears
 in Plone's Add/Remove products form.
 """
-       )
-       )
+        )
+    )
     #zope2product should always defaults to True
     get_var(vars, 'zope2product').default = True
     #add_profile should always default to True for archetype packages

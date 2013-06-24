@@ -1,7 +1,5 @@
 import copy
 
-from zopeskel.base import get_var
-from zopeskel.base import var
 from zopeskel import abstract_zope
 
 
