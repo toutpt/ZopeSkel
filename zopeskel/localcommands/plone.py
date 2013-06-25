@@ -4,6 +4,7 @@ Local templates that are generically useful for every plone related project.
 from zopeskel.base import var
 from zopeskel.localcommands import ZopeSkelLocalTemplate
 
+
 class PloneSubTemplate(ZopeSkelLocalTemplate):
     use_cheetah = True
     parent_templates = ['plone', 'archetype']
@@ -17,10 +18,12 @@ class Portlet(PloneSubTemplate):
     summary = "A Plone 3 portlet"
 
     vars = [
-      var('portlet_name', 'Portlet name (human readable)',  default="Example portlet"),
-      var('portlet_type_name', 'Portlet type name (should not contain spaces)', default="ExamplePortlet"),
-      var('description', 'Portlet description', default=""),
-           ]
+        var('portlet_name', 'Portlet name (human readable)',
+            default="Example portlet"),
+        var('portlet_type_name', 'Portlet type name (id)',
+            default="ExamplePortlet"),
+        var('description', 'Portlet description', default=""),
+    ]
 
     def pre(self, command, output_dir, vars):
         """
@@ -41,8 +44,8 @@ class View(PloneSubTemplate):
     summary = "A browser view skeleton"
 
     vars = [
-      var('view_name', 'Browser view name',  default="Example"),
-           ]
+        var('view_name', 'Browser view name', default="Example"),
+    ]
 
     def pre(self, command, output_dir, vars):
         """
@@ -62,9 +65,10 @@ class ZCMLMetaDirective(PloneSubTemplate):
     summary = "A ZCML meta directive skeleton"
 
     vars = [
-      var('directive_name', 'The directive name',  default="mydirective"),
-      var('directive_namespace', 'The directive namespace',  default="mynamespace"),
-           ]
+        var('directive_name', 'The directive name', default="mydirective"),
+        var('directive_namespace', 'The directive namespace',
+            default="mynamespace"),
+    ]
 
     def pre(self, command, output_dir, vars):
         """
@@ -82,9 +86,7 @@ class I18nLocale(PloneSubTemplate):
     _template_dir = 'templates/plone/i18nlocales'
     summary = "An i18n locale directory structure"
 
-    vars = [
-      var('language_code', 'The iso-code of the language'),
-           ]
+    vars = [var('language_code', 'The iso-code of the language')]
 
     def pre(self, command, output_dir, vars):
         """
@@ -96,7 +98,9 @@ class I18nLocale(PloneSubTemplate):
         # To accomodate testing, we introduce a default here.
 
         language_iso_code = vars['language_code'].lower().strip()
-        vars['language_iso_code'] = language_iso_code and language_iso_code or 'nl'
+        iso = language_iso_code and language_iso_code or 'nl'
+        vars['language_iso_code'] = iso
+
 
 class Form(PloneSubTemplate):
     """
@@ -106,12 +110,14 @@ class Form(PloneSubTemplate):
     summary = "A form skeleton"
 
     vars = [
-        var('form_name', 'Form class name',  default="ExampleForm"),
+        var('form_name', 'Form class name', default="ExampleForm"),
         var('form_label', "Form Title", default='Example Form'),
         var('form_description', "Form Description", default=''),
-        var('form_actions', 'Comma separated list of form actions', default="Submit"),
-        var('form_invariants', 'Comma separated list of invariants', default=""), 
-        ]
+        var('form_actions', 'Comma separated list of form actions',
+            default="Submit"),
+        var('form_invariants', 'Comma separated list of invariants',
+            default=""),
+    ]
 
     def pre(self, command, output_dir, vars):
         """
@@ -123,8 +129,8 @@ class Form(PloneSubTemplate):
         vars['form_filename'] = vars['form_name'].lower()
         vars['form_actions'] = splitCSV(vars['form_actions'])
         vars['form_invariants'] = splitCSV(vars['form_invariants'].strip())
-        
-        
+
+
 class Z3cForm(PloneSubTemplate):
     """
     A zc3 form skeleton
@@ -132,9 +138,7 @@ class Z3cForm(PloneSubTemplate):
     _template_dir = 'templates/archetype/form'
     summary = "A form skeleton"
 
-    vars = [
-      var('form_name', 'Form name',  default="Example"),
-           ]
+    vars = [var('form_name', 'Form name', default="Example")]
 
     def pre(self, command, output_dir, vars):
         """
@@ -144,39 +148,58 @@ class Z3cForm(PloneSubTemplate):
         """
         vars['form_filename'] = vars['form_name'].lower()
 
+
 class FormField(PloneSubTemplate):
     """
-    A template to add a form field to a form. Essentially this 
-    adds a field to Zope 3 schema. 
+    A template to add a form field to a form. Essentially this
+    adds a field to Zope 3 schema.
     """
     _template_dir = 'templates/plone/formfield'
     summary = "Schema field for a form"
 
     _supported_fields = [
-        ("Bool", "Field containin a truth value."), 
-        ("Text", "Field containing unicode text."), 
-        ("TextLine", "Field containing a single line of unicode text."), 
+        ("Bool", "Field containin a truth value."),
+        ("Text", "Field containing unicode text."),
+        ("TextLine", "Field containing a single line of unicode text."),
         ("Datetime", "Field containing a DateTime."),
         ("Date", "Field containing a date."),
         ("Choice", "Obect from a source or vocabulary."),
-        ("Password", "Field containing a unicode string without newlines that is a password.")
-        ]
+        ("Password", "Field containing a unicode string without newlines.")
+    ]
     _field_description = "\n".join(
-        [" "* 25 + x[0].lower() + " : " + x[1] for x in _supported_fields]
-         )
-        
+        [" " * 25 + x[0].lower() + " : " + x[1] for x in _supported_fields]
+    )
+
     vars = [
-        var('form_filename', "Name of the file containing the form in browser.", default="exampleform"),
-        var('field_name', "Name of the field (this should be a unique identifier).", default='examplefield'),
-        var('field_type', "Type of field. Use one of the following \n\n"+_field_description + "\n", default='textline'),
+        var('form_filename',
+            "Name of the file containing the form in browser.",
+            default="exampleform"),
+        var('field_name',
+            "Name of the field (this should be a unique identifier).",
+            default='examplefield'),
+        var('field_type', "Type of field. Use one of the following \n\n %s\n" %
+            _field_description,
+            default='textline'),
         var('field_title', '', default='A short summary or label'),
-        var('field_description', 'A description of the field (to be displayed as a hint)', default=''),
-        var('field_required', 'Tells whether a field requires its value to exist (True/False)', default=False),
-        var('field_readonly', "If true, the field's value cannot be changed (True/False)", default=False),
-        var('field_default', 'The field default value may be None or a legal field value', default='None'),
-        var('field_missing_value', 'If a field has no assigned value, set it to this value', default=''),
-        var('field_constraint', 'Specify the name of a function to use for validation', default=''),
-        ]
+        var('field_description',
+            'A description of the field (to be displayed as a hint)',
+            default=''),
+        var('field_required',
+            'Tells whether a field requires its value to exist (True/False)',
+            default=False),
+        var('field_readonly',
+            "If true, the field's value cannot be changed (True/False)",
+            default=False),
+        var('field_default',
+            'The field default value may be None or a legal field value',
+            default='None'),
+        var('field_missing_value',
+            'If a field has no assigned value, set it to this value',
+            default=''),
+        var('field_constraint',
+            'Specify the name of a function to use for validation',
+            default=''),
+    ]
 
     def pre(self, command, output_dir, vars):
         """
@@ -184,21 +207,25 @@ class FormField(PloneSubTemplate):
         and package_dotted_name of the parent package here. you get them
         for free in the vars argument
         """
-        # XXX this should be handled by _map_boolean in base.py 
-        # but this template does not inherit from BaseTemplate 
+        # XXX this should be handled by _map_boolean in base.py
+        # but this template does not inherit from BaseTemplate
         for var in FormField.vars:
-            if var.name in vars and (type(vars[var.name])==str) and var.default in [True, False, None]:
-                lowered = vars[var.name].lower().strip() 
+            if var.name in vars and (type(vars[var.name]) == str) and \
+                    var.default in [True, False, None]:
+                lowered = vars[var.name].lower().strip()
                 if lowered in ['t', 'y', 'true']:
                     vars[var.name] = True
                 elif lowered in ['f', 'n', 'false']:
                     vars[var.name] = False
-                elif lowered == 'none': 
-                    vars[var.name] = None 
+                elif lowered == 'none':
+                    vars[var.name] = None
 
-        # make the field type case insensitive, if the field type is not in the list of enumerated types
-	# simple use the provided one 
-        vars['field_type'] = dict([(x[0].lower(), x) for x in self._supported_fields]).get(vars['field_type'].lower(), (vars['field_type'],))[0]
+        # make the field type case insensitive, if the field type
+        # is not in the list of enumerated types
+        # simple use the provided one
+        vars['field_type'] = dict(
+            [(x[0].lower(), x) for x in self._supported_fields]
+        ).get(vars['field_type'].lower(), (vars['field_type'],))[0]
 
 
 class BrowserLayer(PloneSubTemplate):
@@ -209,30 +236,32 @@ class BrowserLayer(PloneSubTemplate):
     summary = "A Plone browserlayer"
 
     vars = [
-        var('interface_name', 'Interface name for the browserlayer',  default="IMyPackageBrowserLayer"),
-        var('layer_name', "Browser layer name", default='MyPackage'), 
-        ]
+        var('interface_name', 'Interface name for the browserlayer',
+            default="IMyPackageBrowserLayer"),
+        var('layer_name', "Browser layer name", default='MyPackage'),
+    ]
 
     def check_vars(self, vars, cmd):
         """
-        Overloading check_vars to print welcome message and provide sensitive default values
+        Overloading check_vars to print welcome message and provide sensitive
+        default values
         """
 
-        print "A BrowserLayer is generally used in packages to be installed in a Plone Site."
-        print "If you didn't choose Register Profile option when creating this package"
-        print "you should probably add a <genericsetup:registerProfile /> directive in"
+        print "A BrowserLayer is generally used in packages to be installed"
+        print "in a Plone Site. If you didn't choose Register Profile option"
+        print "when creating this package you should probably add a "
+        print "<genericsetup:registerProfile /> directive in"
         print "the main configure.zcml.\n"
         package_dotted_name = [vars['namespace_package']]
         if 'namespace_package2' in vars:
             package_dotted_name.append(vars['namespace_package2'])
         package_dotted_name.append(vars['package'])
-        
+
         layer_name = ''.join([x.capitalize() for x in package_dotted_name])
         self.vars[1].default = layer_name
         self.vars[0].default = 'I%sLayer' % (layer_name)
 
         return super(BrowserLayer, self).check_vars(vars, cmd)
-
 
     def pre(self, command, output_dir, vars):
         """
@@ -241,4 +270,3 @@ class BrowserLayer(PloneSubTemplate):
         for free in the vars argument
         """
         vars['interface_filename'] = vars['layer_name'].lower() + 'layer'
-
