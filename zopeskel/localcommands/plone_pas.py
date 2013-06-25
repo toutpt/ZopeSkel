@@ -3,6 +3,7 @@ Local templates for the plone PAS zopeskel project
 """
 from zopeskel.localcommands import ZopeSkelLocalTemplate
 
+
 class PlonePasSubTemplate(ZopeSkelLocalTemplate):
     use_cheetah = True
     marker_name = 'implemented plugins'
@@ -81,7 +82,6 @@ class PropertiesPlugin(PlonePasSubTemplate):
     summary = "A Plone PAS Properties Plugin"
 
 
-
 class GroupsPlugin(PlonePasSubTemplate):
     """
     A plone pas Groups plugin
@@ -136,5 +136,3 @@ class RoleEnumerationPlugin(PlonePasSubTemplate):
     """
     _template_dir = 'templates/plone_pas/role_enumeration'
     summary = "A Plone PAS RoleEnumeration Plugin"
-
-

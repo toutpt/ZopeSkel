@@ -22,6 +22,7 @@ class IObjectSchema(interface.Interface):
         default=u'default',
         missing_value=u'missing value')
 
+
 class IExampleSchema(interface.Interface):
     """
     Field types:
@@ -73,7 +74,7 @@ class IExampleSchema(interface.Interface):
         readonly=False,
         default=u'default value',
         missing_value=u'missing value'
-        )
+    )
 
     # TextLine - Field containing a unicode string without newlines
     textline_field = schema.TextLine(
@@ -84,7 +85,7 @@ class IExampleSchema(interface.Interface):
         default=u'default value',
         missing_value=u'missing value',
         constraint=successfull_constraint
-        )
+    )
 
     # Int - Field containing an Integer Value
     int_field = schema.Int(
@@ -96,7 +97,7 @@ class IExampleSchema(interface.Interface):
         missing_value=1,
         min=0,
         max=10
-        )
+    )
 
     # Bool - Boolean Field
     bool_field = schema.Bool(
@@ -104,9 +105,9 @@ class IExampleSchema(interface.Interface):
         description=u'field description',
         required=True,
         readonly=False,
-#        default=True,
-#        missing_value=True
-        )
+        # default=True,
+        # missing_value=True
+    )
 
     # Float - Field containing a Float
     float_field = schema.Float(
@@ -114,9 +115,9 @@ class IExampleSchema(interface.Interface):
         description=u'field description',
         required=True,
         readonly=False,
-#        default=0.0,
-#        missing_value=0.0
-        )
+        # default=0.0,
+        # missing_value=0.0
+    )
 
     # Choice - Field whose value is contained in a predefined set
     # Only one, values or vocabulary, may be specified for a given choice
@@ -125,16 +126,16 @@ class IExampleSchema(interface.Interface):
         description=u'field description',
         required=True,
         readonly=False,
-#        default='Title 2',
-#        missing_value='Option 2',
-#        Only one of the arguments: vocabulary, source or values may be used
+        # default='Title 2',
+        # missing_value='Option 2',
+        # Only one of the arguments: vocabulary, source or values may be used
         vocabulary=SimpleVocabulary((
             SimpleTerm(value=1, token='Option 1', title='Title 1'),
             SimpleTerm(value=2, token='Option 2', title='Title 2')
-            ))
-#        source=VocabularyExample
-#        values=['Option 1', 'Option 2'],
-        )
+        ))
+        # source=VocabularyExample
+        # values=['Option 1', 'Option 2'],
+    )
 
 #    object_field = schema.Object(
 #        title=u'Object field',
@@ -144,7 +145,7 @@ class IExampleSchema(interface.Interface):
 #        default=None,
 #        missing_value=None,
 #        schema=IObjectSchema
-#        )
+#    )
 
 
 class ExampleForm(formbase.PageForm):
@@ -171,7 +172,6 @@ class ExampleForm(formbase.PageForm):
 
         # Put here the code for processing the form
 
-
     def handle_failure(self, action, data, errors):
         """
         Called when the action was submitted and there are validation errors.
@@ -179,6 +179,3 @@ class ExampleForm(formbase.PageForm):
         """
         # Put here the feedback message to show in case the validation failed
         self.status = 'Errors occured while submitting the form'
-
-
-
