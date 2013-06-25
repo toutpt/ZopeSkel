@@ -21,30 +21,35 @@ class ZopeSkelLocalCommand(command.Command):
     group_name = "ZopeSkel local commands"
 
     parser = command.Command.standard_parser(verbose=True)
-    parser.add_option('-l', '--list',
-                      action='store_true',
-                      dest='listcontents',
-                      help="List available templates for the current project")
+    parser.add_option(
+        '-l', '--list',
+        action='store_true',
+        dest='listcontents',
+        help="List available templates for the current project"
+    )
 
-    parser.add_option('-a', '--list-all',
-                      action='store_true',
-                      dest='listallcontents',
-                      help="List all templates regardless of the current project")
+    parser.add_option(
+        '-a', '--list-all',
+        action='store_true',
+        dest='listallcontents',
+        help="List all templates regardless of the current project"
+    )
 
-    parser.add_option('-q', '--no-interactive',
-                      action="count",
-                      dest="no_interactive",
-                      default=0)    
+    parser.add_option(
+        '-q', '--no-interactive',
+        action="count",
+        dest="no_interactive",
+        default=0)
 
     template_vars = {}
-    
+
     def command(self):
         """
         command method
         """
         self.interactive = 1
         options, args = self.options, self.args
-        
+
         if options.listcontents:
             self._list_sub_templates()
             return
@@ -63,9 +68,9 @@ class ZopeSkelLocalCommand(command.Command):
         (self.template_vars['namespace_package'],
          self.template_vars['namespace_package2'],
          self.template_vars['package']) = self.get_parent_namespace_packages()
-        
+
         dest_dir = self.dest_dir()
-        
+
         templates = []
         self._extend_templates(templates, args[0])
 
@@ -77,17 +82,16 @@ class ZopeSkelLocalCommand(command.Command):
             if self.verbose:
                 print 'Creating template %s' % tmpl.name
             tmpl.run(self, dest_dir, self.template_vars)
-        
-    
+
     def dest_dir(self):
         dest_dir = os.path.join(
-                   os.path.dirname(
-                       pluginlib.find_egg_info_dir(os.getcwd())),
-                                   self.template_vars['namespace_package'],
-                                   self.template_vars['namespace_package2'],
-                                   self.template_vars['package'])
+            os.path.dirname(pluginlib.find_egg_info_dir(os.getcwd())),
+            self.template_vars['namespace_package'],
+            self.template_vars['namespace_package2'],
+            self.template_vars['package']
+        )
         return dest_dir
-    
+
     def get_parent_namespace_packages(self):
         """
         return the project namespaces and package name.
@@ -107,12 +111,13 @@ class ZopeSkelLocalCommand(command.Command):
         namespace_package2 = ''
         if len(packages) == 2:
             namespace_package2 = packages[1]
-        ( dirpath, dirnames, filenames) = os.walk(os.path.join(
-                                            os.path.dirname(egg_info),
-                                                    namespace_package,
-                                                    namespace_package2)).next()
-        # Get the package dir because we usually want to issue the 
-        # localcommand in the package dir. 
+        (dirpath, dirnames, filenames) = os.walk(os.path.join(
+            os.path.dirname(egg_info),
+            namespace_package,
+            namespace_package2)
+        ).next()
+        # Get the package dir because we usually want to issue the
+        # localcommand in the package dir.
         package = os.path.basename(os.path.abspath(os.path.curdir))
 
         # If the package dir is not in the list of inner_packages,
@@ -123,7 +128,8 @@ class ZopeSkelLocalCommand(command.Command):
         if package not in inner_packages:
             package = inner_packages[0]
             if len(inner_packages) > 1:
-                package = self.challenge('Please choose one package to inject content into %s' % inner_packages)
+                msg = 'Please choose one package to inject content into %s'
+                package = self.challenge(msg % inner_packages)
 
         return namespace_package, namespace_package2, package
 
@@ -137,7 +143,6 @@ class ZopeSkelLocalCommand(command.Command):
         egg_info_dir = pluginlib.find_egg_info_dir(os.getcwd())
         setup_cfg = os.path.join(os.path.dirname(egg_info_dir), 'setup.cfg')
 
-        parent_template = None
         if os.path.exists(setup_cfg):
             parser = ConfigParser.ConfigParser()
             parser.read(setup_cfg)
@@ -166,7 +171,7 @@ class ZopeSkelLocalCommand(command.Command):
 
         max_name = max([len(t.name) for t in templates])
         templates.sort(lambda a, b: cmp(a.name, b.name))
- 
+
         for template in templates:
             _marker = " "
             if not template.parent_templates:
@@ -178,8 +183,9 @@ class ZopeSkelLocalCommand(command.Command):
             print '  %s %s:%s  %s' % (
                 _marker,
                 template.name,
-                ' '*(max_name-len(template.name)),
-                template.summary)
+                ' ' * (max_name - len(template.name)),
+                template.summary
+            )
 
     def _all_entry_points(self):
         """
@@ -187,7 +193,8 @@ class ZopeSkelLocalCommand(command.Command):
         """
         if not hasattr(self, '_entry_points'):
             self._entry_points = list(pkg_resources.iter_entry_points(
-            'zopeskel.zopeskel_sub_template'))
+                'zopeskel.zopeskel_sub_template')
+            )
         return self._entry_points
 
     def _extend_templates(self, templates, tmpl_name):
@@ -240,14 +247,16 @@ class ZopeSkelLocalTemplate(templates.Template):
          vars['package']) = command.get_parent_namespace_packages()
 
         if vars['namespace_package2']:
-            vars['package_dotted_name'] = "%s.%s.%s" % \
-                (vars['namespace_package'],
+            vars['package_dotted_name'] = "%s.%s.%s" % (
+                vars['namespace_package'],
                 vars['namespace_package2'],
-                vars['package'])
+                vars['package']
+            )
         else:
-            vars['package_dotted_name'] = "%s.%s" % \
-                (vars['namespace_package'],
-                 vars['package'])
+            vars['package_dotted_name'] = "%s.%s" % (
+                vars['namespace_package'],
+                vars['package']
+            )
 
         self.pre(command, output_dir, vars)
         self.write_files(command, output_dir, vars)
@@ -265,15 +274,18 @@ class ZopeSkelLocalTemplate(templates.Template):
                 # Don't let copydir create this top-level directory,
                 # since copydir will svn add it sometimes:
                 os.makedirs(output_dir)
-        self.copy_dir(template_dir, output_dir,
-                         vars,
-                         verbosity=1,
-                         simulate=0,
-                         interactive=1,
-                         overwrite=0,
-                         indent=1,
-                         use_cheetah=self.use_cheetah,
-                         template_renderer=self.template_renderer)
+        self.copy_dir(
+            template_dir,
+            output_dir,
+            vars,
+            verbosity=1,
+            simulate=0,
+            interactive=1,
+            overwrite=0,
+            indent=1,
+            use_cheetah=self.use_cheetah,
+            template_renderer=self.template_renderer
+        )
 
     def copy_dir(self, source, dest, vars, verbosity, simulate, indent=0,
                  use_cheetah=False, sub_vars=True, interactive=False,
@@ -287,13 +299,14 @@ class ZopeSkelLocalTemplate(templates.Template):
         vars.setdefault('plus', '+')
         names = os.listdir(source)
         names.sort()
-        pad = ' '*(indent*2)
+        pad = ' ' * (indent * 2)
         if not os.path.exists(dest):
             if verbosity >= 1:
                 print '%sCreating %s/' % (pad, dest)
             if not simulate:
-                copydir.svn_makedirs(dest, svn_add=svn_add, verbosity=verbosity,
-                             pad=pad)
+                copydir.svn_makedirs(
+                    dest, svn_add=svn_add, verbosity=verbosity, pad=pad
+                )
         elif verbosity >= 2:
             print '%sDirectory %s exists' % (pad, dest)
         for name in names:
@@ -307,7 +320,8 @@ class ZopeSkelLocalTemplate(templates.Template):
 
             if sub_vars:
                 dest_full = os.path.join(
-                                  dest, copydir.substitute_filename(name, vars))
+                    dest, copydir.substitute_filename(name, vars)
+                )
             sub_file = False
             if dest_full.endswith('_tmpl'):
                 dest_full = dest_full[:-5]
@@ -315,20 +329,23 @@ class ZopeSkelLocalTemplate(templates.Template):
             if os.path.isdir(full):
                 if verbosity:
                     print '%sRecursing into %s' % (pad, os.path.basename(full))
-                self.copy_dir(full, dest_full, vars, verbosity, simulate,
-                         indent=indent+1, use_cheetah=use_cheetah,
-                         sub_vars=sub_vars, interactive=interactive,
-                         svn_add=svn_add, template_renderer=template_renderer)
+                self.copy_dir(
+                    full, dest_full, vars, verbosity, simulate,
+                    indent=indent + 1, use_cheetah=use_cheetah,
+                    sub_vars=sub_vars, interactive=interactive,
+                    svn_add=svn_add, template_renderer=template_renderer
+                )
                 continue
             f = open(full, 'rb')
             content = f.read()
             f.close()
             try:
                 content = copydir.substitute_content(
-                                            content,
-                                            vars, filename=full,
-                                            use_cheetah=use_cheetah,
-                                            template_renderer=template_renderer)
+                    content,
+                    vars, filename=full,
+                    use_cheetah=use_cheetah,
+                    template_renderer=template_renderer
+                )
             except copydir.SkipTemplate:
                 continue
 
@@ -338,30 +355,32 @@ class ZopeSkelLocalTemplate(templates.Template):
             already_exists = os.path.exists(dest_full)
             if already_exists:
                 if sub_file and verbosity:
-                    print "File '%s' already exists: skipped" % \
-                           os.path.basename(dest_full)
+                    msg = "File '%s' already exists: skipped"
+                    print msg % os.path.basename(dest_full)
                     continue
                 f = open(dest_full, 'rb')
                 old_content = f.read()
                 f.close()
                 if old_content == content:
                     if verbosity:
-                        print '%s%s already exists (same content)' % \
-                               (pad, dest_full)
+                        print '%s%s already exists (same content)' % (
+                            pad, dest_full
+                        )
                     continue
 
                 if verbosity:
-                    print "%sInserting from %s into %s" % \
-                                (pad, os.path.basename(full), dest_full)
+                    print "%sInserting from %s into %s" % (
+                        pad, os.path.basename(full), dest_full
+                    )
 
                 if not content.endswith('\n'):
                     content += '\n'
                 # remove lines starting with '#'
-                content = '\n'.join([l for l in content.split('\n') \
-                                     if not l.startswith('#')])
-                self._command.insert_into_file(dest_full,
-                                               self.marker_name,
-                                               content)
+                raw = [l for l in content.split('\n') if not l.startswith('#')]
+                content = '\n'.join(raw)
+                self._command.insert_into_file(
+                    dest_full, self.marker_name, content
+                )
                 continue
 
             if verbosity:
@@ -370,8 +389,9 @@ class ZopeSkelLocalTemplate(templates.Template):
                                               dest_full)
             # remove '#' from the start of lines
             if not sub_file:
-                content = content.replace('\n#','\n')
-                if content[0] == '#': content = content[1:]
+                content = content.replace('\n#', '\n')
+                if content[0] == '#':
+                    content = content[1:]
 
             if not simulate:
                 f = open(dest_full, 'wb')
@@ -379,9 +399,10 @@ class ZopeSkelLocalTemplate(templates.Template):
                 f.close()
             if svn_add and not already_exists:
                 if not os.path.exists(
-                           os.path.join(
-                               os.path.dirname(
-                                   os.path.abspath(dest_full)), '.svn')):
+                    os.path.join(
+                        os.path.dirname(os.path.abspath(dest_full)), '.svn'
+                    )
+                ):
                     if verbosity > 1:
                         print '%s.svn/ does not exist; cannot add file' % pad
                 else:
