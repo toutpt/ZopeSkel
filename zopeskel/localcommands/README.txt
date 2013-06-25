@@ -13,7 +13,6 @@ You can list the available templates::
 
   $ paster create --list-templates
   Available templates:
-    archetype:          A Plone project that uses Archetypes
     asic_namespace:    A project with a namespace package
     basic_package:      A basic setuptools-enabled package
     basic_zope:         A Zope project

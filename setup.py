@@ -71,8 +71,6 @@ setup(
     zcmlmeta = zopeskel.localcommands.plone:ZCMLMetaDirective
     i18nlocale = zopeskel.localcommands.plone:I18nLocale
 
-    contenttype = zopeskel.localcommands.archetype:ContentType
-    atschema = zopeskel.localcommands.archetype:ATSchemaField
     form = zopeskel.localcommands.plone:Form
     formfield = zopeskel.localcommands.plone:FormField
     browserlayer = zopeskel.localcommands.plone:BrowserLayer
