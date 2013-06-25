@@ -5,7 +5,6 @@ Grabs the tests in doctest
 __docformat__ = 'restructuredtext'
 
 import unittest
-import doctest
 import sys
 import os
 import shutil
@@ -15,6 +14,7 @@ import tempfile
 from zope.testing import doctest
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
+
 
 def rmdir(*args):
     dirname = os.path.join(*args)
@@ -46,7 +46,6 @@ def paster(cmd):
 
 def read_sh(cmd):
     _cmd = cmd
-    old = sys.stdout 
     child_stdout_and_stderr, child_stdin = popen2.popen4(_cmd)
     child_stdin.close()
     return child_stdout_and_stderr.read()
@@ -86,7 +85,7 @@ def cat(*args):
 
 def touch(*args, **kwargs):
     filename = os.path.join(*args)
-    open(filename, 'w').write(kwargs.get('data',''))
+    open(filename, 'w').write(kwargs.get('data', ''))
 
 
 class ZopeSkelLayer:
@@ -97,7 +96,7 @@ class ZopeSkelLayer:
     def testSetUp(self):
         self.temp_dir = tempfile.mkdtemp()
         cd(self.temp_dir)
-      
+
     @classmethod
     def testTearDown(self):
         shutil.rmtree(self.temp_dir, ignore_errors=True)
@@ -115,9 +114,11 @@ class ZopeSkelLayer:
 
         sys.path = ws.entries[:]
 
+
 def testSetUp(test):
     test.temp_dir = tempfile.mkdtemp()
     cd(test.temp_dir)
+
 
 def testTearDown(test):
     shutil.rmtree(test.temp_dir, ignore_errors=True)
@@ -134,6 +135,7 @@ def testTearDown(test):
             del ws.entries[i]
 
     sys.path = ws.entries[:]
+
 
 def doc_suite(test_dir, setUp=testSetUp, tearDown=testTearDown, globs=None):
     """Returns a test suite, based on doctests found in /docs."""
@@ -155,12 +157,13 @@ def doc_suite(test_dir, setUp=testSetUp, tearDown=testTearDown, globs=None):
             os.listdir(doctest_dir) if doc.endswith('.txt')]
 
     for test in docs:
-        suite.append(doctest.DocFileSuite(test, optionflags=flags, 
-                                          globs=globs, setUp=setUp, 
+        suite.append(doctest.DocFileSuite(test, optionflags=flags,
+                                          globs=globs, setUp=setUp,
                                           tearDown=tearDown,
                                           module_relative=False))
 
     return unittest.TestSuite(suite)
+
 
 def test_suite():
     """returns the test suite"""
@@ -170,4 +173,3 @@ def test_suite():
 
 if __name__ == '__main__':
     unittest.main(defaultTest='test_suite')
-
