@@ -65,14 +65,14 @@ setup(
     addcontent = zopeskel.localcommands:ZopeSkelLocalCommand
 
     [zopeskel.zopeskel_sub_template]
+    browserlayer = zopeskel.localcommands.plone:BrowserLayer
+    dexterity = zopeskel.localcommands.plone:Dexterity
+    form = zopeskel.localcommands.plone:Form
+    formfield = zopeskel.localcommands.plone:FormField
+    i18nlocale = zopeskel.localcommands.plone:I18nLocale
     portlet = zopeskel.localcommands.plone:Portlet
     view = zopeskel.localcommands.plone:View
     zcmlmeta = zopeskel.localcommands.plone:ZCMLMetaDirective
-    i18nlocale = zopeskel.localcommands.plone:I18nLocale
-
-    form = zopeskel.localcommands.plone:Form
-    formfield = zopeskel.localcommands.plone:FormField
-    browserlayer = zopeskel.localcommands.plone:BrowserLayer
 
     extraction_plugin = zopeskel.localcommands.plone_pas:ExtractionPlugin
     authentication_plugin = zopeskel.localcommands.plone_pas:AuthenticationPlugin

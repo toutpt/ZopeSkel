@@ -9,6 +9,19 @@ class PloneSubTemplate(ZopeSkelLocalTemplate):
     use_cheetah = True
     parent_templates = ['plone']
 
+    def pre(self, command, output_dir, vars):
+        """
+        you can use package_namespace, package_namespace2, package
+        and package_dotted_name of the parent package here. you get them
+        for free in the vars argument
+        """
+        super(PloneSubTemplate, self).pre(command, output_dir, vars)
+        dotted_name = [vars['namespace_package']]
+        if 'namespace_package2' in vars and vars['namespace_package2']:
+            dotted_name.append(vars['namespace_package2'])
+        dotted_name.append(vars['package'])
+        vars['dotted_name'] = ".".join(dotted_name)
+
 
 class Portlet(PloneSubTemplate):
     """
@@ -31,8 +44,8 @@ class Portlet(PloneSubTemplate):
         and package_dotted_name of the parent package here. you get them
         for free in the vars argument
         """
+        super(Portlet, self).pre(command, output_dir, vars)
         vars['portlet_filename'] = vars['portlet_type_name'].lower()
-
         vars['dotted_name'] = "%s.portlets" % vars['package_dotted_name']
 
 
@@ -53,6 +66,7 @@ class View(PloneSubTemplate):
         and package_dotted_name of the parent package here. you get them
         for free in the vars argument
         """
+        super(View, self).pre(command, output_dir, vars)
         vars['view_filename'] = vars['view_name'].lower().replace(' ', '')
         vars['view_classname'] = vars['view_name'].replace(' ', '')
 
@@ -76,6 +90,7 @@ class ZCMLMetaDirective(PloneSubTemplate):
         and package_dotted_name of the parent package here. you get them
         for free in the vars argument
         """
+        super(ZCMLMetaDirective, self).pre(command, output_dir, vars)
         vars['directive_class_name'] = vars['directive_name'].title()
 
 
@@ -94,6 +109,7 @@ class I18nLocale(PloneSubTemplate):
         and package_dotted_name of the parent package here. you get them
         for free in the vars argument
         """
+        super(I18nLocale, self).pre(command, output_dir, vars)
         # There is no default for language_code, because that makes no sense
         # To accomodate testing, we introduce a default here.
 
@@ -146,6 +162,7 @@ class Z3cForm(PloneSubTemplate):
         and package_dotted_name of the parent package here. you get them
         for free in the vars argument
         """
+        super(Z3cForm, self).pre(command, output_dir, vars)
         vars['form_filename'] = vars['form_name'].lower()
 
 
@@ -207,6 +224,7 @@ class FormField(PloneSubTemplate):
         and package_dotted_name of the parent package here. you get them
         for free in the vars argument
         """
+        super(FormField, self).pre(command, output_dir, vars)
         # XXX this should be handled by _map_boolean in base.py
         # but this template does not inherit from BaseTemplate
         for var in FormField.vars:
@@ -235,15 +253,21 @@ class BrowserLayer(PloneSubTemplate):
     _template_dir = 'templates/plone/browserlayer'
     summary = "A Plone browserlayer"
 
+
+class Dexterity(PloneSubTemplate):
+    """A dexterity template"""
+    _template_dir = 'templates/plone/dexterity'
+    summary = "A dexterity template"
+
+    vars = [var('typeid', 'Content type ID', default="example"),
+            var('type_schema', 'Type schema name', default="ExampleSchema"),
+            var('type_title', 'Type title', default="Example"),
+            var('type_desc', 'Type description', default="Description")]
+
     def pre(self, command, output_dir, vars):
-        """
-        you can use package_namespace, package_namespace2, package
-        and package_dotted_name of the parent package here. you get them
-        for free in the vars argument
-        """
-        dotted_name = [vars['namespace_package']]
-        if 'namespace_package2' in vars and vars['namespace_package2']:
-            dotted_name.append(vars['namespace_package2'])
-        dotted_name.append(vars['package'])
-        vars['dotted_name'] = ".".join(dotted_name)
-        super(BrowserLayer, self).pre(command, output_dir, vars)
+        super(Dexterity, self).pre(command, output_dir, vars)
+        vars['permission_id'] = "%s.Add%s" % (vars['dotted_name'],
+                                               vars['typeid'].capitalize())
+        vars['permission_title'] = "%s: Add %s" % (vars['dotted_name'],
+                                                       vars['type_title'])
+        vars['permission_var'] = "Add%s" % vars['typeid'].capitalize()

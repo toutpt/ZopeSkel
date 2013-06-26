@@ -1,0 +1,15 @@
+from plone.directives import form
+
+from zope import interface
+from zope import schema
+
+from ${dotted_name}.i18n import _
+
+
+class ${type_schema}(form.Schema):
+    """The schema of a user action"""
+    test = schema.Bool(
+        title=_(u"Test field"),
+        description=_(u"Description of the field"),
+        required=False,
+    )

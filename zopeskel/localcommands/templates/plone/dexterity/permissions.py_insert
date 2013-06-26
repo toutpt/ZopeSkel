@@ -1,0 +1,12 @@
+## #from is a keyword for cheetah, so we escape the # to keep python
+\#from AccessControl.SecurityInfo import ModuleSecurityInfo
+\#from Products.CMFCore.permissions import setDefaultRoles
+
+\#security = ModuleSecurityInfo('${dotted_name}')
+
+## Here we escape the first # so it will not be considered as cheetah comment
+\##-*- extra stuff goes here -*-
+
+security.declarePublic('${permission_var}')
+${permission_var} = '${permission_title}'
+setDefaultRoles(${permission_var}, ('Owner', 'Manager'))
