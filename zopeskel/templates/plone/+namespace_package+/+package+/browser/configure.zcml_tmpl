@@ -3,6 +3,7 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="${namespace_package}.${package}">
 
+    <!-- -*- extra stuff goes here -*- -->
 
   <!-- EXAMPLE:
   <browser:viewlet

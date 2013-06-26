@@ -29,4 +29,6 @@
       name="${namespace_package}.${package}"
       />
 
+  <!-- -*- extra stuff goes here -*- -->
+
 </configure>
