@@ -24,11 +24,6 @@
   <include file="upgrades.zcml" />
 #end if
 
-  <interface
-      interface=".layer.Layer"
-      name="${namespace_package}.${package}"
-      />
-
   <!-- -*- extra stuff goes here -*- -->
 
 </configure>

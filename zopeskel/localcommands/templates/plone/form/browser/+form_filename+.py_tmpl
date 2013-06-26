@@ -5,7 +5,7 @@ from z3c.form import form, button
 from zope import component, interface, schema
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
-from ${package_dotted_name} import ${package}MessageFactory as _
+from ${package_dotted_name}.i18n import _
 
 
 class ${form_name}Schema(model.Schema):

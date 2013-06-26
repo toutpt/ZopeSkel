@@ -11,9 +11,6 @@ class I${view_classname}View(Interface):
     ${view_name} view interface
     """
 
-    def test():
-        """ test method"""
-
 
 class ${view_classname}View(BrowserView):
     """
@@ -24,19 +21,3 @@ class ${view_classname}View(BrowserView):
     def __init__(self, context, request):
         self.context = context
         self.request = request
-
-    @property
-    def portal_catalog(self):
-        return getToolByName(self.context, 'portal_catalog')
-
-    @property
-    def portal(self):
-        return getToolByName(self.context, 'portal_url').getPortalObject()
-
-    def test(self):
-        """
-        test method
-        """
-        dummy = _(u'a dummy string')
-
-        return {'dummy': dummy}

@@ -5,13 +5,13 @@
 #
 #    <!-- -*- extra stuff goes here -*- -->
 
-  <browser:page
-      for="*"
-      name="${view_filename}_view"
-      class=".${view_filename}view.${view_classname}View"
-      template="${view_filename}view.pt"
-      allowed_interface=".${view_filename}view.I${view_classname}View"
-      permission="zope.Public"
-      />
+    <browser:page
+        for="*"
+        name="${view_filename}_view"
+        class=".${view_filename}_view.${view_classname}View"
+        template="templates/${view_filename}_view.pt"
+        allowed_interface=".${view_filename}view.I${view_classname}View"
+        permission="zope2.View"
+        />
 
 #</configure>

@@ -2,8 +2,7 @@
 #<layers>
 #    <!-- -*- extra stuff goes here -*- -->
 
-    <layer name="${layer_name}"
-        interface="${namespace_package}.${package}.interfaces.${interface_filename}.${interface_name}"
+    <layer name="${dotted_name}"
+        interface="${dotted_name}.browser.layer.Layer"
     />
 #</layers>
-

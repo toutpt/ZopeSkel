@@ -1,4 +1,0 @@
-<layers>
-    <layer name="${namespace_package}.${package}"
-           interface="${namespace_package}.${package}.layer.Layer" />
-</layers>

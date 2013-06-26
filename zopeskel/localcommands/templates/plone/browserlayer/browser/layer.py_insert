@@ -1,8 +1,8 @@
 from zope.interface import Interface
-# -*- Additional Imports Here -*-
+## -*- Additional Imports Here -*-
 
 
-class $(interface_name)(Interface):
+class Layer(Interface):
     """ A layer specific to this product. 
         Is registered using browserlayer.xml
     """
