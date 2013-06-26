@@ -4,8 +4,8 @@ from zopeskel import abstract_buildout
 
 
 class PloneBuildout(abstract_buildout.AbstractBuildout):
-    _template_dir = 'templates/plone4_buildout'
-    summary = "A buildout for Plone 4 developer installation"
+    _template_dir = 'templates/plone_buildout'
+    summary = "A buildout for Plone developer installation"
     help = """
 This template creates a Plone 4 buildout for development purposes.
 It uses Zope in debug mode and sets a default password.

@@ -4,7 +4,7 @@ import os
 
 from zopeskel.basic_zope import BasicZope
 from zopeskel.base import get_var
-from zopeskel.base import EASY, EXPERT
+from zopeskel.vars import EASY, EXPERT
 from zopeskel.vars import BooleanVar
 
 

@@ -7,7 +7,6 @@ from paste.script.command import get_commands
 from zopeskel.base import BaseTemplate, get_var
 from zopeskel.vars import var, BooleanVar, StringVar, TextVar, DottedVar
 from zopeskel.vars import EXPERT, EASY
-from zopeskel.archetype import Archetype
 from zopeskel.plone import Plone
 from zopeskel.basic_namespace import BasicNamespace
 
@@ -37,7 +36,7 @@ class test_base_template(unittest.TestCase):
         self.template = BaseTemplate('my_name')
         create = get_commands()['create'].load()
         command = create('create')
-        command.parse_args(['-t', 'archetype'])
+        command.parse_args(['-t', 'plone'])
         self.command = command
 
     def test_filter_for_modes(self):
@@ -120,19 +119,19 @@ class test_base_template(unittest.TestCase):
                           self.template.get_position_in_stack,
                           stack)
 
-        new_template = Archetype('joe')
+        new_template = Plone('joe')
         self.assertEqual(new_template.get_position_in_stack(stack),
                          len(stack) - 1)
 
     def test_get_template_stack(self):
         """ verify that running this command against a create command
-            with the argument '-t archetype' returns the expected vals
+            with the argument '-t plone' returns the expected vals
         """
         stack = self.template.get_template_stack(self.command)
         self.assertEqual(len(stack), 3)
         self.failIf(self.template.__class__ in
                     [t.__class__ for t in stack], "%s" % stack)
-        new_template = Archetype('joe')
+        new_template = Plone('joe')
         self.failUnless(new_template.__class__ in
                         [t.__class__ for t in stack], "%s" % stack)
 
@@ -148,7 +147,7 @@ class test_base_template(unittest.TestCase):
         """
         n_template = BasicNamespace('tom')
         p_template = Plone('bob')
-        a_template = Archetype('joe')
+        a_template = Plone('joe')
 
         self.failIf(n_template.should_print_subcommands(self.command))
         self.failIf(p_template.should_print_subcommands(self.command))

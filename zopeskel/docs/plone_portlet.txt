@@ -12,8 +12,16 @@ Let's check the content::
 
     >>> package_dir = 'collective.portlet.example'
     >>> ls(package_dir)
-    README.txt
+    CHANGES.txt
+    MANIFEST.in
+    README.rst
+    base.cfg
+    bootstrap.py
+    buildout.cfg
     collective
     collective.portlet.example.egg-info
     docs
+    gitignore
     setup.py
+    travis.cfg
+    travis.yml

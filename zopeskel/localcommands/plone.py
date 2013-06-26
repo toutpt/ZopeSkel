@@ -7,7 +7,7 @@ from zopeskel.localcommands import ZopeSkelLocalTemplate
 
 class PloneSubTemplate(ZopeSkelLocalTemplate):
     use_cheetah = True
-    parent_templates = ['plone', 'archetype']
+    parent_templates = ['plone']
 
 
 class Portlet(PloneSubTemplate):
@@ -135,7 +135,7 @@ class Z3cForm(PloneSubTemplate):
     """
     A zc3 form skeleton
     """
-    _template_dir = 'templates/archetype/form'
+    _template_dir = 'templates/plone/form'
     summary = "A form skeleton"
 
     vars = [var('form_name', 'Form name', default="Example")]

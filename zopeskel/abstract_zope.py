@@ -6,7 +6,7 @@ from zopeskel.vars import BooleanVar
 VAR_ZOPE2 = BooleanVar(
     'zope2product',
     title='Zope2 Product?',
-    description='Are you creating a product for Zope2/Plone or an Archetypes Product?',
+    description='Are you creating a old style Zope2 product?',
     default=True,
     modes=(),
     help="""

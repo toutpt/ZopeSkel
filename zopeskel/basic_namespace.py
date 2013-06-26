@@ -1,7 +1,7 @@
 import copy
 from zopeskel.vars import DottedVar, StringVar, BooleanVar, TextVar
 from zopeskel.base import BaseTemplate
-from zopeskel.base import EASY, EXPERT
+from zopeskel.vars import EASY, EXPERT
 
 
 class BasicNamespace(BaseTemplate):

@@ -2,7 +2,7 @@ import copy
 
 from zopeskel.plone_app import PloneApp
 from zopeskel.base import get_var
-from zopeskel.base import EASY, EXPERT
+from zopeskel.vars import EASY, EXPERT
 from zopeskel.vars import StringVar, DottedVar
 
 

@@ -7,6 +7,7 @@ Changelog
 * Remove all plone2 and plone3 related skel
 * Rename skells without plone version number
 * plone_portlet: use z3cform instead of formlib
+* QA: add flake8 test
 
 2.21.2 - October 6, 2011
 ------------------------

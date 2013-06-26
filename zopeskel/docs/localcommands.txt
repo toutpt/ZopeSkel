@@ -200,36 +200,3 @@ Check that the existing files like profile/browserlayer are updated::
 Go back to the top level directory to have a more or less clean slate
 for the following tests.
     >>> cd('..')
-
-Archetype
----------
-
-An archetype based project has other localcommands available::
-
-    >>> paster('create -t archetype archetype.example --no-interactive')
-    paster create -t archetype archetype.example --no-interactive
-    ...
-    >>> cd('archetype.example')
-    >>> paster('help')
-    paster help
-    ...
-    <BLANKLINE>
-    ZopeSkel local commands:
-      addcontent   Adds plone content types to your project
-    <BLANKLINE>
-    <BLANKLINE>
-
-What sub-templates are available for an archetype based project ?::
-
-    >>> paster('addcontent --list')
-    paster addcontent --list
-    Available templates:
-        atschema:      A handy AT schema builder
-        browserlayer:  A Plone browserlayer
-        contenttype:   A content type skeleton
-        form:          A form skeleton
-        formfield:     Schema field for a form
-        i18nlocale:    An i18n locale directory structure
-        portlet:       A Plone 3 portlet
-        view:          A browser view skeleton
-        zcmlmeta:      A ZCML meta directive skeleton

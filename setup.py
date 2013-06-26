@@ -56,7 +56,6 @@ setup(
     plone = zopeskel.plone:Plone
     plone_app = zopeskel.plone_app:PloneApp
     plone_buildout = zopeskel.plone_buildout:PloneBuildout
-    archetype = zopeskel.archetype:Archetype
     plone_portlet = zopeskel.plone_portlet:PlonePortlet
     plone_hosting = zopeskel.hosting:StandardHosting
     recipe = zopeskel.recipe:Recipe

@@ -61,33 +61,33 @@ class test_zopeskel(unittest.TestCase):
         sys.argv = ['zopskel']
         self.assertRaises(SyntaxError, process_args)
 
-        sys.argv.append('archetype')
+        sys.argv.append('plone')
         processed = process_args()
-        self.failUnlessEqual(processed[0], 'archetype')
+        self.failUnlessEqual(processed[0], 'plone')
         self.failIf(processed[1])
         self.failIf(processed[2])
 
         sys.argv.append('my.project')
         processed = process_args()
-        self.failUnlessEqual(processed[0], 'archetype')
+        self.failUnlessEqual(processed[0], 'plone')
         self.failUnlessEqual(processed[1], 'my.project')
         self.failIf(processed[2])
 
         sys.argv.append('--bob=kate')
         processed = process_args()
-        self.failUnlessEqual(processed[0], 'archetype')
+        self.failUnlessEqual(processed[0], 'plone')
         self.failUnlessEqual(processed[1], 'my.project')
         self.failUnlessEqual(processed[2]['--bob'], 'kate')
 
         # process_args will allow us to skip the project name argument
         sys.argv.pop(2)
         processed = process_args()
-        self.failUnlessEqual(processed[0], 'archetype')
+        self.failUnlessEqual(processed[0], 'plone')
         self.failIf(processed[1])
         self.failUnlessEqual(processed[2]['--bob'], 'kate')
 
         # providing arguments in '-name val' form is _not_ allowed
-        sys.argv = ['zopeskel', 'archetype', 'my.project', '-bob', 'kate']
+        sys.argv = ['zopeskel', 'plone', 'my.project', '-bob', 'kate']
         self.assertRaises(SyntaxError, process_args)
 
         # the --svn-repository argument is _not_ allowed in any form

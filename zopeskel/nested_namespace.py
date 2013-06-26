@@ -1,9 +1,8 @@
 import copy
 
 from zopeskel.base import get_var
-from zopeskel.base import EXPERT
 from zopeskel.basic_namespace import BasicNamespace
-from zopeskel.vars import DottedVar
+from zopeskel.vars import EXPERT, DottedVar
 
 
 VAR_NS2 = DottedVar(

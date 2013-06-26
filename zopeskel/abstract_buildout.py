@@ -1,7 +1,7 @@
 import copy
 
 from zopeskel.base import BaseTemplate
-from zopeskel.base import EASY, EXPERT
+from zopeskel.vars import EASY, EXPERT
 from zopeskel.vars import StringVar, OnOffVar, BoundedIntVar
 
 VAR_PLONEVER = StringVar(

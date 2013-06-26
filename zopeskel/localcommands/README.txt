@@ -26,9 +26,9 @@ You can list the available templates::
 
 You can start a new project::
 
-  $ paster create -t archetype myproject
+  $ paster create -t plone myproject
 
-You have to answer many questions and in the end you will get an archetype
+You have to answer many questions and in the end you will get a plone
 based skeleton to start your project.
 
 Now what will you do to add a new plone content type, Zope 3 utility, ...etc ?
@@ -56,7 +56,7 @@ List the available paster commands::
     serve        Serve the described application
     setup-app    Setup an application, given a config file
 
-Now create an archetype project as described above, cd to the project folder
+Now create a plone project as described above, cd to the project folder
 and check the available commands::
 
   $ cd myproject
@@ -81,12 +81,10 @@ that your project is ``addcontent`` aware (more about this later) .
 To see the list of available templates for a zopeskel template, create
 a project based on that template and run ``paster addcontent -l``::
 
-  $ paster create -t archetype myproject
+  $ paster create -t plone myproject
   $ cd myproject
   myproject$ paster addcontent -l
   Available templates:
-      atschema:     A handy AT schema builder
-      contenttype:  A content type skeleton
       form:         A form skeleton
       formfields:   Schema fields for a form
       i18nlocale:   An i18n locale directory structure
@@ -101,10 +99,8 @@ project::
   myproject$ paster addcontent -a
   Available templates:
     N anonymous_user_factory_plugin:  A Plone PAS AnonymousUserFactory Plugin
-      atschema:                       A handy AT schema builder
     N authentication_plugin:          A Plone PAS Authentication Plugin
     N challenge_plugin:               A Plone PAS Challenge Plugin
-      contenttype:                    A content type skeleton
     N credentials_reset_plugin:       A Plone PAS CredentialsReset Plugin
     N extraction_plugin:              A Plone PAS Extraction Plugin
       form:                           A form skeleton
@@ -238,7 +234,7 @@ Now, take a look to the python part. Here is the Portlet class::
       _template_dir = 'templates/portlet'
       summary = "A Plone 3 portlet"
       use_cheetah = True
-      parent_templates = ['archetype']
+      parent_templates = ['plone']
 
       vars = []
       vars.append(var('portlet_name',
@@ -319,10 +315,10 @@ a ``template`` option containing the name of the template you used to generate
 your current projet::
 
     [zopeskel]
-    template = archetype
+    template = plone
 
 For the moment the ``addcontent`` command is only enabled for the
-archetype, plone and plone_pas templates. You can enable
+plone, plone and plone_pas templates. You can enable
 ``addcontent`` command for other ZopeSkel templates by addinng a
 ``use_local_commands`` attribute to the template class and set it to
 'True'::
@@ -341,7 +337,7 @@ enable the portlet template for the plone template::
       A plone 3 portlet skeleton
       """
       ...
-      parent_templates = ['archetype', 'plone']
+      parent_templates = ['plone']
       ...
 
 

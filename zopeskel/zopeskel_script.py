@@ -44,9 +44,9 @@ for a verbose list with full descriptions, run the ``zopeskel --list``)
 
 For example::
 
-    zopeskel archetypes
+    zopeskel plone
 
-To create an Archetypes-based product for Plone. This will prompt you
+To create a Plone based addon for Plone. This will prompt you
 for the name of your product, and for other information about it.
 
 If you to specify your output name (resulting product, egg, or buildout,
@@ -56,13 +56,13 @@ depending on the template being used), you can also do so::
 
 For example::
 
-    zopeskel archetypes Products.Example
+    zopeskel plone collective.example
 
 In addition, you can pass variables to this that would be requested
 by that template, and these will then be used. This is an advanced
 feature mostly useful for scripted use of this::
 
-    zopeskel archetypes Products.Example author_email=joel@joelburton.com
+    zopeskel plone collective.example author_email=joel@joelburton.com
 
 (You can specify as many of these as you want, in name=value pairs.
 To get the list of variables that a template expects, you can ask for

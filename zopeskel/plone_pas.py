@@ -7,10 +7,9 @@ from zopeskel.base import get_var
 class PlonePas(abstract_zope.AbstractNestedZope):
     _template_dir = 'templates/plone_pas'
     summary = "A project for a Plone PAS plugin"
-    help = """
-This create a project for developing a PAS ('pluggable authentication
-system') plugin.
-"""
+    help = """This create a project for developing a PAS plugin
+    ('pluggable authentication system')
+    """
     category = "Plone Development"
     required_templates = ['nested_namespace']
     use_cheetah = True

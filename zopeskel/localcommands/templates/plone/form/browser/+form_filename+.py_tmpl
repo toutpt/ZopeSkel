@@ -1,11 +1,14 @@
-from zope import interface, schema
-from zope.formlib import form
-from Products.Five.formlib import formbase
+from plone.supermodel import model
+from plone.z3cform.layout import FormWrapper
+from Products.statusmessages.interfaces import IStatusMessage
+from z3c.form import form, button
+from zope import component, interface, schema
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 from ${package_dotted_name} import ${package}MessageFactory as _
 
-class I${form_name}Schema(interface.Interface):
+
+class ${form_name}Schema(model.Schema):
     # -*- extra stuff goes here -*-
 
 #for $invariant in $form_invariants
@@ -19,17 +22,40 @@ class I${form_name}Schema(interface.Interface):
 #end if
 #end for
 
-class ${form_name}(formbase.PageForm):
-    form_fields = form.FormFields(I${form_name}Schema)
+
+class ${form_name}Adapter(object):
+    """This is the contextual adapter which provide the form schema. This
+    components is responsible to fill the form by extracting data from
+    the context.
+    
+    Providing None value is far enough if your form is not supposed to
+    be filled by the context.
+    """
+    interface.implements(I${form_name})
+    component.adapts(interface.Interface)
+
+    def __init__(self, context):
+        self.context = context
+
+
+class ${form_name}(AutoExtensibleForm, form.Form):
+    schema = ${form_name}Schema
     label = _(u'${form_label}')
     description = _(u'${form_description}')
+    enableCSRFProtection = True
 
 #for $action in $form_actions
-    @form.action('${action}')
-    def action${action}(self, action, data):
-        pass
+    @button.buttonAndHandler(_(u"${action}"))
+    def action${action}(self, action):
+        data, errors = self.extractData()
+        status = IStatusMessage(self)
+
         # Put the action handler code here 
+
+        self.request.response.redirect(self.context.absolute_url())
 
 #end for
 
 
+class ${form_name}Wrapper(FormWrapper):
+    form = ${form_name}

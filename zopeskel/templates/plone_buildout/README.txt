@@ -107,10 +107,6 @@ Create theme (applies for Plone 4 also)::
 	
 	bin/zopeskel plone3_theme plonetheme.mythemeid
 	
-Create Archetypes based content types package::
-
-	bin/zopeskel archetype mycompanyid.content
-
 Create other Plone customizations::
 
 	bin/zopeskel plone mycompanyid.mypackageid
