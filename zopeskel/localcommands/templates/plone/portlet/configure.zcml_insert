@@ -6,5 +6,5 @@
 
 #  <!-- -*- extra stuff goes here -*- -->
   <include package=".portlets" />
-  
+
 #</configure>
