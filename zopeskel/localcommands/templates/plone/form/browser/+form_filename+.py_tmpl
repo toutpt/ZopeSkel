@@ -22,7 +22,6 @@ class ${form_name}Schema(model.Schema):
 #end if
 #end for
 
-
 class ${form_name}Adapter(object):
     """This is the contextual adapter which provide the form schema. This
     components is responsible to fill the form by extracting data from
@@ -55,7 +54,6 @@ class ${form_name}(AutoExtensibleForm, form.Form):
         self.request.response.redirect(self.context.absolute_url())
 
 #end for
-
 
 class ${form_name}Wrapper(FormWrapper):
     form = ${form_name}

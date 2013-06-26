@@ -184,6 +184,11 @@ the safest answer is False.
         ),
     ]
 
+    def pre(self, command, output_dir, vars):
+        super(BasicNamespace, self).pre(command, output_dir, vars)
+        vars['dotted_name'] = "%s.%s" % (vars['namespace_package'],
+                                            vars['package'])
+
     def check_vars(self, vars, command):
         if not command.options.no_interactive and \
            not hasattr(command, '_deleted_once'):

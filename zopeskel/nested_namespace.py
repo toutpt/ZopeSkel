@@ -35,3 +35,9 @@ This creates a Python project without any Zope or Plone features.
     get_var(vars, 'namespace_package').default = 'plone'
     vars.insert(2, VAR_NS2)
     get_var(vars, 'package').default = 'example'
+
+    def pre(self, command, output_dir, vars):
+        super(NestedNamespace, self).pre(command, output_dir, vars)
+        vars['dotted_name'] = "%s.%s.%s" % (vars['namespace_package'],
+                                            vars['package'])
+
