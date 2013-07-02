@@ -38,6 +38,8 @@ This creates a Python project without any Zope or Plone features.
 
     def pre(self, command, output_dir, vars):
         super(NestedNamespace, self).pre(command, output_dir, vars)
-        vars['dotted_name'] = "%s.%s.%s" % (vars['namespace_package'],
-                                            vars['package'])
-
+        vars['dotted_name'] = "%s.%s.%s" % (
+            vars['namespace_package'],
+            vars['namespace_package2'],
+            vars['package']
+        )
