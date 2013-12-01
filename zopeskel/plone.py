@@ -61,19 +61,6 @@ using it.
                 self.post_run_msg = msg % str(e)
         super(Plone, self).post(command, output_dir, vars)
 
-        #add gitignore
         path = os.path.join(output_dir)
-        try:
-            os.rename(os.path.join(path, 'gitignore'),
-                      os.path.join(path, '.gitignore'))
-        except OSError, e:
-            msg = """WARNING: Could not create .gitignore file: %s"""
-            self.post_run_msg = msg % str(e)
-
-        #add travisyml
-        try:
-            os.rename(os.path.join(path, 'travis.yml'),
-                      os.path.join(path, '.travis.yml'))
-        except OSError, e:
-            msg = """WARNING: Could not create .travis.yml file: %s"""
-            self.post_run_msg = msg % str(e)
+        files = ('gitignore', 'travis.yml', 'coveragerc')
+        self.rename_hidden_files(path, files)

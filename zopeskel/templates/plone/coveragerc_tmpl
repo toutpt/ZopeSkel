@@ -1,0 +1,9 @@
+[run]
+source = ${dotted_name}
+[report]
+omit =
+    extras/*
+    buildout-cache/eggs/*
+    parts/*
+    eggs/*
+    */test*

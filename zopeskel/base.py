@@ -370,3 +370,14 @@ For more information: paster help COMMAND""" % print_commands
                 pages.append(page)
                 page_map[name] = page
         return pages
+
+    def rename_hidden_files(self, path, files):
+        """Rename @files to be hidden files (starts with a dot)
+        """
+        for filename in files:
+            try:
+                os.rename(os.path.join(path, filename),
+                          os.path.join(path, '.%s' % filename))
+            except OSError, e:
+                msg = """WARNING: Could not create %s file: %s"""
+                self.post_run_msg = msg % (filename, str(e))
